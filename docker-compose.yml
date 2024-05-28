@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+  web:
+    build:
+      context: .
+    image: 192.168.43.197:5000/docker-rail-app:v1
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
